@@ -24,22 +24,30 @@
   toadApp.factory('YTLoader', (function(){
     var _player;
 
+    function setPlayerObject() {
+      if (YT && YT.Player) _player = new YT.Player('toad-video');
+    }
+
     GLOBAL.onYouTubeIframeAPIReady = function () {
-      _player = new YT.Player('toad-video');
+      console.log('youtube loaded, getting player object');
+      setPlayerObject();
     }
 
     GLOBAL.onPlayerReady = function (event) {
+      console.log('start playback');
       event.target.playVideo();
     }
   
     return function($q, $interval) {
       var deferred = $q.defer();
-      var videoChecker = $interval(checkVideo, 150, 10); 
+      var videoChecker = $interval(checkVideo, 150, 20); 
       function checkVideo () {
         if (_player) {
-          console.log('player ready.');
+          console.log('player ready! returning player');
           deferred.resolve(_player);
           $interval.cancel(videoChecker);
+        } else {
+          setPlayerObject();
         }
       }
       return deferred.promise;
@@ -63,7 +71,8 @@
         }
 
         scope.$watch(getNotes, function(newNotes, oldNotes){
-          //if (newNotes === oldNotes) return;
+          if (newNotes === oldNotes) return;
+
           YTLoader
             .then(function(yt){
                 console.log('starting notes playback.');
