@@ -1,0 +1,36 @@
+// bourbon bitters
+@import "bourbon/bourbon"
+@import "neat/neat"
+@import "base/base"
+
+.video-wrapper
+  height: 0
+  overflow: hidden
+  padding-bottom: 75%
+  position: relative
+
+  embed,
+  object,
+  iframe
+    @include position(absolute, 0px null null 0px)
+    @include size(100%)
+
+.toadHeader
+  font-size: 90px
+  text-align: center
+
+.toadContainer
+  @include outer-container
+
+.toadPlaylist
+  @include span-columns(6)
+
+.toadPlayer
+  @include span-columns(6)
+
+.toadSong
+  border: 1px solid blue
+  cursor: pointer
+  display: block
+  margin-bottom: 5px
+  padding: 10px
