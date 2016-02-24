@@ -32,16 +32,16 @@
     }
   
     return function($q, $interval) {
-      var deffered = $q.defer();
+      var deferred = $q.defer();
       var videoChecker = $interval(checkVideo, 150, 10); 
       function checkVideo () {
         if (_player) {
           console.log('player ready.');
-          deffered.resolve(_player);
+          deferred.resolve(_player);
           $interval.cancel(videoChecker);
         }
       }
-      return deffered.promise;
+      return deferred.promise;
     };
 
   }()));
