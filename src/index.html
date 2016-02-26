@@ -4,30 +4,35 @@
   <meta charset="UTF-8">
   <link rel="stylesheet" href="./css/main.css">
   <title>Toad Tunes</title>
-  <script src="https://www.youtube.com/iframe_api"></script> 
+  <script src="https://www.youtube.com/iframe_api"></script>
   <script>
-  (function(window){
-    'use strict';
     console.log('setup player');
     window._player = null;
-    window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
-    window.onPlayerReady = onPlayerReady;
-    window.onYoutubePlayerReady = onYoutubePlayerReady;
+    window._playerReady = false;
 
     function onYouTubeIframeAPIReady () {
-      console.log('video loaded! (set to window object)');
-      window._player = new YT.Player('toad-vid');
+      console.log('api loaded!');
+      setTimeout(function(){
+        window._player = new YT.Player('toad-vid', {
+          events : {
+            onReady : onPlayerReady
+          }
+        });
+      }, 3000);
     }
 
     function onYoutubePlayerReady (id) {
       console.log('player with this id is ready: ', id);
     }
-    
+    function onPlayerStateChange(event) {
+      console.log('onPlayerStateChange(event)');
+    }
+
     function onPlayerReady (event) {
       console.log('onPlayerReady');
-      event.target.playVideo();
+      //event.target.playVideo();
+      window._playerReady = true;
     }
-  }(window));
   </script>
   <script src='./js/app.js'></script>
 </head>
@@ -40,7 +45,7 @@
   <div class="toadContainer">
 
     <div class="toadPlaylist">
-    
+
       <ul>
         <li ng-repeat="song in songList">
           <a class="toadSong" ng-bind="song.title" ng-click='setSong(song)'></a>

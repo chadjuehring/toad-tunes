@@ -30,12 +30,13 @@
     var videoChecker = $interval(checkVideo, 500);
 
     function checkVideo () {
-      console.log('$window.player: ', $window._player);
-      if ($window._player) {
+      //console.log('$window._player: ', $window._player);
+      //console.log('$window._playerReady: ', $window._playerReady);
+      if ($window._player && $window._playerReady) {
         $interval.cancel(videoChecker);
         console.log('player ready! returning player');
         deferred.resolve($window._player);
-      } 
+      }
     }
 
     $timeout(function(){
