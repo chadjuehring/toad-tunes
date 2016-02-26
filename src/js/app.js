@@ -41,7 +41,7 @@
     $timeout(function(){
       $interval.cancel(videoChecker);
       deferred.reject();
-    }, 2000);
+    }, 5000);
 
     return deferred.promise;
   });
