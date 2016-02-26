@@ -6,6 +6,8 @@
   toadApp.factory('songList', function(){
     return [
       { title: 'Imperial March', data: '6 6 6 856 8 56  3 3 3 256 8 56'},
+      { title: 'Jingle Bells', data: '333 333 325 43 222'},
+      { title: 'Mary Had a Little Lamb', data: '3454333 444 322 345 4333 443455'},
       //{ title: 'Jurassic Park', data: '676008900676000890006776600897'},
       { title: 'Ride of the Valkyries', data: '86 865 6 5 653 5 3 532 8 6865'}
     ];
@@ -14,11 +16,12 @@
   toadApp.controller('toadEditor', function($scope, songList) {
     console.log('editor init!');
     $scope.songList = songList;
-    $scope.isEditing = false; // imperial march
+    $scope.isEditing = false;
 
     $scope.setSong = function(song){
       $scope.songEdit = song.data;
     };
+
   });
 
   toadApp.factory('YTLoader', function($q, $interval, $timeout, $window) {
