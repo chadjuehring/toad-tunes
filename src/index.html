@@ -5,6 +5,30 @@
   <link rel="stylesheet" href="./css/main.css">
   <title>Toad Tunes</title>
   <script src="https://www.youtube.com/iframe_api"></script> 
+  <script>
+  (function(window){
+    'use strict';
+    console.log('setup player');
+    window._player = null;
+    window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
+    window.onPlayerReady = onPlayerReady;
+    window.onYoutubePlayerReady = onYoutubePlayerReady;
+
+    function onYouTubeIframeAPIReady () {
+      console.log('video loaded! (set to window object)');
+      window._player = new YT.Player('toad-vid');
+    }
+
+    function onYoutubePlayerReady (id) {
+      console.log('player with this id is ready: ', id);
+    }
+    
+    function onPlayerReady (event) {
+      console.log('onPlayerReady');
+      event.target.playVideo();
+    }
+  }(window));
+  </script>
   <script src='./js/app.js'></script>
 </head>
 <body ng-controller='toadEditor'>

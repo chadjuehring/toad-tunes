@@ -1,4 +1,4 @@
-(function(GLOBAL){
+(function(){
   'use strict';
 
   var toadApp = angular.module('toad', []);
@@ -21,39 +21,28 @@
     };
   });
 
-  toadApp.factory('YTLoader', (function(){
-    var _player;
+  toadApp.factory('YTLoader', function($q, $interval, $timeout, $window) {
+    var deferred = $q.defer();
 
-    function setPlayerObject() {
-      if (YT && YT.Player) _player = new YT.Player('toad-video');
+    var videoChecker = $interval(checkVideo, 500);
+
+    function checkVideo () {
+      console.log('$window.player: ', $window._player);
+      if ($window._player) {
+        $interval.cancel(videoChecker);
+        console.log('player ready! returning player');
+        deferred.resolve($window._player);
+      } 
     }
 
-    GLOBAL.onYouTubeIframeAPIReady = function () {
-      console.log('youtube loaded, getting player object');
-      setPlayerObject();
-    }
+    $timeout(function(){
+      $interval.cancel(videoChecker);
+      deferred.reject();
+    }, 2000);
 
-    GLOBAL.onPlayerReady = function (event) {
-      console.log('start playback');
-      event.target.playVideo();
-    }
-  
-    return function($q, $interval) {
-      var deferred = $q.defer();
-      var videoChecker = $interval(checkVideo, 150, 20); 
-      function checkVideo () {
-        if (_player) {
-          console.log('player ready! returning player');
-          deferred.resolve(_player);
-          $interval.cancel(videoChecker);
-        } else {
-          setPlayerObject();
-        }
-      }
-      return deferred.promise;
-    };
+    return deferred.promise;
+  });
 
-  }()));
 
   toadApp.directive('toadTunes', function($interval, YTLoader){
     return {
@@ -93,6 +82,6 @@
       }
     }
   });
-}(window));
+}());
 
 
