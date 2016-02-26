@@ -55,7 +55,6 @@
       link: function (scope, element, attributes) {
         var notePlayer;
         function getNotes () { 
-          console.log(attributes.notes); 
           return attributes.notes; 
         }
 
@@ -65,10 +64,13 @@
           YTLoader
             .then(function(yt){
                 console.log('starting notes playback.');
+                console.log('yt: ', yt);
                 var notes = newNotes.split('');
                 var bpm = 60 * 1000 / attributes.bpm;
                 $interval.cancel(notePlayer);
                 notePlayer = $interval(playNote, bpm, notes.length);
+
+                console.log('yt player: ', yt);
 
                 function playNote () {
                   var n = parseInt(notes.shift());
@@ -77,6 +79,8 @@
                   var notePercent = parseInt(n, 10) * 10;
                   yt.seekTo(duration * (notePercent / 100));
                 }
+            }).catch(function(error){
+              console.log('failed to load yt player!');
             });
         });
       }
