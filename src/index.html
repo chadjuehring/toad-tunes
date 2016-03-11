@@ -2,6 +2,7 @@
 <html lang="en" ng-app="toad">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="./css/main.css">
   <title>Toad Tunes</title>
   <script src="https://www.youtube.com/iframe_api"></script>
@@ -38,26 +39,57 @@
 </head>
 <body ng-controller='toadEditor'>
 
-  <h1 class="toadHeader"> toad tunes. </h1>
+  <header class="toadHeader">
+    <h1 class="toadHeader-title"> toad<strong>tunes</strong><sup>&trade;</sup></h1>
+    <h2 class="toadHeader-tagline">Music streaming for the modern world.</h2>
+  </header>
+
+  <!--
   <div class="toadEditor">
     <textarea ng-model="songEdit"></textarea>
   </div>
+  -->
+  
   <div class="toadContainer">
 
+    <div class="instruction">
+     Pick a song.
+    </div>
     <div class="toadPlaylist">
-
-      <ul>
+      <ul class="toadPlaylist-songs">
         <li ng-repeat="song in songList">
           <a class="toadSong" ng-bind="song.title" ng-click='setSong(song)'></a>
         </li>
       </ul>
+
+      <select
+        class="toadPlaylist-mobileSelect"
+        ng-options="songOption.title for songOption in songList"
+        ng-model="song"
+        ng-change="setSong(song)">
+      </select>
     </div>
 
     <div class="toadPlayer">
+      <div class="instruction">
+       Scream along.
+      </div>
       <toad-tunes notes="{{songEdit}}" bpm="100"></toad-tunes>
     </div>
   </div>
 
+
+  <footer class="toadFooter">
+
+    <form class="toadForm">
+      <p>Get notified when we update toad<strong>tunes</strong>!</p>
+      <input type="text" id="email" name="email" placeholder="Enter your email address&hellip;"/>
+      <input type="submit" value="Submit" />
+    </form>
+    
+    <p class="toadFooter-tagline">A music streaming product by</p>
+    <p class="toadFooter-logo"><img src="images/rev-unit-full-white.svg" alt="RevUnit" /></p>
+  </footer>
 
 </body>
 </html>

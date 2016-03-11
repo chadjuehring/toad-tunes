@@ -42,7 +42,7 @@
     $timeout(function(){
       $interval.cancel(videoChecker);
       deferred.reject();
-    }, 5000);
+    }, 10000);
 
     return deferred.promise;
   });
@@ -67,14 +67,13 @@
 
           YTLoader
             .then(function(yt){
+                yt.playVideo();
                 console.log('starting notes playback.');
                 console.log('yt: ', yt);
                 var notes = newNotes.split('');
                 var bpm = 60 * 1000 / attributes.bpm;
                 $interval.cancel(notePlayer);
                 notePlayer = $interval(playNote, bpm, notes.length);
-
-                console.log('yt player: ', yt);
 
                 function playNote () {
                   var n = parseInt(notes.shift());

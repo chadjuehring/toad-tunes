@@ -8,6 +8,7 @@ var paths = {
     './src/js/app.js'
   ],
   sass : ['./src/sass/*.sass'],
+  images : ['./src/images/*.*'],
   html : [
     './src/*.html' 
   ],
@@ -18,6 +19,7 @@ var paths = {
 
 var outPaths = {
   html : './dist/',
+  images : './dist/images/',
   templates: './dist/templates/',
   js: './dist/js/',
   css: './dist/css/'
@@ -35,6 +37,11 @@ gulp.task('js', function(){
     .pipe(gulp.dest(outPaths.js))
 });
 
+gulp.task('imageCopy', function(){
+  return gulp.src(paths.images)
+    .pipe(gulp.dest(outPaths.images))
+});
+
 gulp.task('htmlCopy', function(){
   return gulp.src(paths.html)
     .pipe(gulp.dest(outPaths.html))
@@ -45,11 +52,12 @@ gulp.task('templateCopy', function(){
     .pipe(gulp.dest(outPaths.templates))
 });
 
-gulp.task('html', ['htmlCopy', 'templateCopy']);
+gulp.task('html', ['htmlCopy', 'templateCopy', 'imageCopy']);
 
-gulp.task('default', ['sass', 'js', 'html'], function(){
+gulp.task('default', ['sass', 'js', 'html', 'imageCopy'], function(){
   gulp.watch(paths.sass, ['sass']);
   gulp.watch(paths.js, ['js']);
   gulp.watch(paths.html, ['htmlCopy']);
   gulp.watch(paths.templates, ['templateCopy']);
+  gulp.watch(paths.images, ['imageCopy']);
 });

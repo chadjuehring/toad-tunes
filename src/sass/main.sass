@@ -3,6 +3,18 @@
 @import "neat/neat"
 @import "base/base"
 
+$limegreen : #37e6a0
+$calm: #3793E6
+
+html, body
+  margin: 0
+  padding: 0
+
+body
+  @include position(absolute, 0 0 0 0)
+  background: $limegreen
+  //position: relative
+
 .video-wrapper
   height: 0
   overflow: hidden
@@ -15,22 +27,108 @@
     @include position(absolute, 0px null null 0px)
     @include size(100%)
 
+.toadHeader, .toadFooter
+  background-color: $limegreen
+  color: #ffffff
+  text-align: center
+  @media screen and (min-width: 800px)
+    position: absolute
+    width: 38%
+
+@media screen and (min-width: 800px)
+  .toadFooter
+    bottom: 0
+    position: absolute
+
 .toadHeader
   font-size: 90px
-  text-align: center
+  padding: 30px 0
+  &-title
+    font-size: .5em
+    font-weight: 300
+    height: 25px
+    sup
+      font-size: .4em
+  &-tagline
+    font-size: .2em
+    font-style: italic
+    font-weight: 300
 
 .toadContainer
-  @include outer-container
+  box-sizing: border-box
+  background: #fff
+  counter-reset: toad-counter
+  text-align: center
+  @media screen and (min-width: 800px)
+    @include position(absolute, 0 0 0 38%)
+    padding: 0 10%
 
 .toadPlaylist
-  @include span-columns(6)
+  &-songs
+    display: none
+    @media (min-width:800px)
+      display: block
+      margin: auto
+      width: 80%
+    @media (min-width:1000px)
+      li
+        display: inline-block
+        margin: 1.5% 1%
+        width: 40%
+
+  &-mobileSelect
+    display: none
+    @media (max-width:800px)
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='50px' height='50px'><polyline points='46.139,15.518 25.166,36.49 4.193,15.519' style='fill: #ccc;'/></svg>")
+      background-position: 96% 50% 
+      background-repeat: no-repeat
+      background-size: 10px 10px
+      border: 2px solid $calm
+      border-radius: 20px
+      color: $calm
+      display: block
+      height: 40px
+      margin: 0 auto
+      outline: none
+      -moz-appearance: none
+      -webkit-appearance: none
+      width: 50%
 
 .toadPlayer
-  @include span-columns(6)
+
+.instruction
+  color: $limegreen
+  padding: 25px 0
+
+.instruction:before
+  background: $limegreen
+  border-radius: 50%
+  color: #fff
+  content: counter(toad-counter)
+  counter-increment: toad-counter
+  padding: 3px 8px
 
 .toadSong
-  border: 1px solid blue
+  border: 2px solid $calm
+  border-radius: 20px
+  color: $calm
   cursor: pointer
   display: block
   margin-bottom: 5px
   padding: 10px
+  &:hover
+    background: $calm
+    color: #fff
+
+.toadForm
+  background: #dedede
+  color: #737373
+  padding: 20px
+  text-align: center
+  input[type="submit"]
+    background-color: $calm
+    border-radius: 20px
+    width: 50%
+  @media (min-width:800px)
+    color: #ffffff
+    background: $limegreen
